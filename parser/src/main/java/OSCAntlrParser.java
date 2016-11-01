@@ -13,7 +13,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 //import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class OSCAntlrParser{
-    public Class parse(FileInputStream source_code_input_stream) throws IOException {
+    void parseAndRun(FileInputStream source_code_input_stream) throws IOException {
         ANTLRInputStream input = new ANTLRInputStream(source_code_input_stream);
         OS_CLexer lexer = new OS_CLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
