@@ -14,20 +14,17 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 public class OSCAntlrParser implements OS_CBaseVisitor{
     public Class parse(String source_code) {
-        ANTLRInputStream input = new ANTLRInputStream();
-        // parse
-        // this
-        // file
-        JavaLexer lexer = new JavaLexer(input);
+        ANTLRInputStream input = new ANTLRInputStream(source_code);
+        OS_CLexer lexer = new OS_CLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        JavaParser parser = new JavaParser(tokens);
+        OS_CParser parser = new OS_CParser(tokens);
         ParseTree tree = parser.compilationUnit(); // see the grammar ->
         // starting point for
         // parsing a java file
 
 
 
-        MyVisitor visitor = new MyVisitor(); // extends JavaBaseVisitor<Void>
+        OS_CVisitor visitor = new OS_CVisitor(); // extends JavaBaseVisitor<Void>
         // and overrides the methods
         // you're interested
         visitor.visit(tree);

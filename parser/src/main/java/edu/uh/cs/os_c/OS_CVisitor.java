@@ -137,9 +137,15 @@ public interface OS_CVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIoOperation(OS_CParser.IoOperationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link OS_CParser#ioFunctionName}.
+	 * Visit a parse tree produced by {@link OS_CParser#readFunction}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIoFunctionName(OS_CParser.IoFunctionNameContext ctx);
+	T visitReadFunction(OS_CParser.ReadFunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link OS_CParser#writeFunction}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWriteFunction(OS_CParser.WriteFunctionContext ctx);
 }

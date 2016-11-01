@@ -268,13 +268,25 @@ public class OS_CBaseListener implements OS_CListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIoFunctionName(OS_CParser.IoFunctionNameContext ctx) { }
+	@Override public void enterReadFunction(OS_CParser.ReadFunctionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIoFunctionName(OS_CParser.IoFunctionNameContext ctx) { }
+	@Override public void exitReadFunction(OS_CParser.ReadFunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWriteFunction(OS_CParser.WriteFunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWriteFunction(OS_CParser.WriteFunctionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

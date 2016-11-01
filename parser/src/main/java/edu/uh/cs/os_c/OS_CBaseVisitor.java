@@ -164,5 +164,12 @@ public class OS_CBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements O
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitIoFunctionName(OS_CParser.IoFunctionNameContext ctx) { return visitChildren(ctx); }
+	@Override public T visitReadFunction(OS_CParser.ReadFunctionContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitWriteFunction(OS_CParser.WriteFunctionContext ctx) { return visitChildren(ctx); }
 }

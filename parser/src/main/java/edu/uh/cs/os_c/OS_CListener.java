@@ -218,13 +218,23 @@ public interface OS_CListener extends ParseTreeListener {
 	 */
 	void exitIoOperation(OS_CParser.IoOperationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link OS_CParser#ioFunctionName}.
+	 * Enter a parse tree produced by {@link OS_CParser#readFunction}.
 	 * @param ctx the parse tree
 	 */
-	void enterIoFunctionName(OS_CParser.IoFunctionNameContext ctx);
+	void enterReadFunction(OS_CParser.ReadFunctionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link OS_CParser#ioFunctionName}.
+	 * Exit a parse tree produced by {@link OS_CParser#readFunction}.
 	 * @param ctx the parse tree
 	 */
-	void exitIoFunctionName(OS_CParser.IoFunctionNameContext ctx);
+	void exitReadFunction(OS_CParser.ReadFunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link OS_CParser#writeFunction}.
+	 * @param ctx the parse tree
+	 */
+	void enterWriteFunction(OS_CParser.WriteFunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link OS_CParser#writeFunction}.
+	 * @param ctx the parse tree
+	 */
+	void exitWriteFunction(OS_CParser.WriteFunctionContext ctx);
 }

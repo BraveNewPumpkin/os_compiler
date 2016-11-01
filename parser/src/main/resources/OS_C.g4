@@ -126,17 +126,21 @@ parallelItem
     ;
 
 ioOperation
-    :   ioFunctionName '(' identifierList ')'
+    :   readFunction
+    |   writeFunction
+    ;
+
+readFunction
+    :   'read(' identifierList ')'
+    ;
+
+writeFunction
+    :   'write(' identifierList ')'
     ;
 
 TypeSpecifier
     :   ('input_var'
     | 'internal_var')
-    ;
-
-ioFunctionName
-    :   'read'
-    |   'write'
     ;
 
 StartParallel
