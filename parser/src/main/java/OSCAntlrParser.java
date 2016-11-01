@@ -12,9 +12,9 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 //import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-public class OSCAntlrParser implements OS_CBaseVisitor{
-    public Class parse(String source_code) {
-        ANTLRInputStream input = new ANTLRInputStream(source_code);
+public class OSCAntlrParser{
+    public Class parse(FileInputStream source_code_input_stream) throws IOException {
+        ANTLRInputStream input = new ANTLRInputStream(source_code_input_stream);
         OS_CLexer lexer = new OS_CLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         OS_CParser parser = new OS_CParser(tokens);
@@ -24,7 +24,7 @@ public class OSCAntlrParser implements OS_CBaseVisitor{
 
 
 
-        OS_CVisitor visitor = new OS_CVisitor(); // extends JavaBaseVisitor<Void>
+        OS_CVisitor visitor = new OS_CVisitorIo(); // extends JavaBaseVisitor<Void>
         // and overrides the methods
         // you're interested
         visitor.visit(tree);
