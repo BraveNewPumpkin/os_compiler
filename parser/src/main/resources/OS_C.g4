@@ -71,7 +71,7 @@ declaration
 
 identifierList
     :   Identifier
-    |   identifierList ',' Identifier
+    |   identifierList (',' | ' ') Identifier
     ;
 
 statement

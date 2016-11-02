@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.antlr.v4.runtime.tree.ParseTree;
-
 public class Runner {
     public static void main(String args[]) {
         String code_filepath = args[0]; //TODO error checking?
@@ -19,15 +16,15 @@ public class Runner {
                 FileInputStream source_code_input_stream = new FileInputStream(code_filepath);
                 FileInputStream data_input_stream = new FileInputStream(data_filepath);
         ) {
-            OSCAntlrParser parser = new OSCAntlrParser();
-            ParseTree tree = parser.parse(source_code_input_stream);
+            OS_CRunner os_c_runner = new OS_CRunner();
+            String string_tree = os_c_runner.parse(source_code_input_stream);
             if(verbose){
-                //TODO print tree
+                System.out.println(string_tree);
             }
             Map<String, Integer> variables = new HashMap<>();
-            parser.getInputVariables(data_input_stream);
-            parser.runCalculations(variables);
-            parser.write(variables, System.out);
+            os_c_runner.getInputVariables(data_input_stream);
+//            os_c_runner.runCalculations(variables);
+//            os_c_runner.write(variables, System.out);
 
         } catch (IOException e) {
             System.err.printf("failed to load config file: %s\n", code_filepath);

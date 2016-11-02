@@ -16,22 +16,22 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 //import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-public class OSCAntlrParser{
+public class OS_CRunner {
     private OS_CParser parser;
     private ParseTree tree;
 
-    public ParseTree parse(FileInputStream source_code_input_stream) throws IOException {
+    public String parse(FileInputStream source_code_input_stream) throws IOException {
         ANTLRInputStream input = new ANTLRInputStream(source_code_input_stream);
         OS_CLexer lexer = new OS_CLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         parser = new OS_CParser(tokens);
         tree = parser.compilationUnit();
+        return tree.toStringTree(parser);
     }
     public Map<String, Integer> getInputVariables(FileInputStream data_input_stream) throws IOException {
         Map<String, Integer> variables = new HashMap<>();
-        //TODO define OS_CVisitorDeclarations
-        //TODO visit declarations and get list of all variables
         OS_CVisitorDeclarations visitor = new OS_CVisitorDeclarations();
+        //TODO visit declarations and get list of all variables
         List<String> input_variables = visitor.visit(tree);
         //TODO loop through variables and read them from data file
         return variables;
