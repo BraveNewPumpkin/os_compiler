@@ -28,6 +28,10 @@
 
 grammar OS_C;
 
+@header {
+    package edu.uh.cs.os_c;
+}
+
 compilationUnit
     :   translationUnit? EOF
     ;
@@ -71,7 +75,7 @@ declaration
 
 identifierList
     :   Identifier
-    |   identifierList (',' | ' ') Identifier
+    |   identifierList ','? Identifier
     ;
 
 statement

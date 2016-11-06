@@ -22,7 +22,7 @@ public class Runner {
                 System.out.println(string_tree);
             }
             Map<String, Integer> variables = new HashMap<>();
-            os_c_runner.getInputVariables(data_input_stream);
+            os_c_runner.getInputVariables(data_input_stream, variables);
 //            os_c_runner.runCalculations(variables);
 //            os_c_runner.write(variables, System.out);
 
