@@ -90,7 +90,7 @@ assignmentExpression
 
 rExpression
     :   rValue
-    |   additiveExpression
+    |   multiplicativeExpression
     ;
 
 rValue
@@ -98,17 +98,17 @@ rValue
     |   Constant
     ;
 
-additiveExpression
-    :   multiplicativeExpression
-    |   additiveExpression '+' multiplicativeExpression
-    |   additiveExpression '-' multiplicativeExpression
-    ;
-
 multiplicativeExpression
-    :   atomicExpression
+    :   additiveExpression
     |   multiplicativeExpression '*' atomicExpression
     |   multiplicativeExpression '/' atomicExpression
     |   multiplicativeExpression '%' atomicExpression
+    ;
+
+additiveExpression
+    :   atomicExpression
+    |   additiveExpression '+' multiplicativeExpression
+    |   additiveExpression '-' multiplicativeExpression
     ;
 
 atomicExpression
