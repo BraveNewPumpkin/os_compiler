@@ -71,7 +71,9 @@ public class OS_CRunner {
     }
 
     public void runCalculations(Map<String, Integer> variables) {
-        //TODO implement OS_CVisitorCalculations
+        OS_CVisitor visitor = new OS_CVisitorCalculations(variables);
+        //visit and perform all calculations
+        visitor.visit(tree);
     }
     public void write(Map<String, Integer> variables, PrintStream out){
         //TODO implement OS_CVisitorWrite

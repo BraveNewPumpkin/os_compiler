@@ -48,14 +48,14 @@ externalDeclaration
     ;
 
 functionDefinition
-    :   declarator compoundStatement
+    :   declarator block
     ;
 
 declarator
     :   Identifier '(' ')'
     ;
 
-compoundStatement
+block
     :   '{' blockItemList? '}'
     ;
 
@@ -65,12 +65,13 @@ blockItemList
     ;
 
 blockItem
-    :   declaration
+    :   declaration ';'
     |   statement
+    |   ioOperation ';'
     ;
 
 declaration
-    :   TypeSpecifier identifierList ';'
+    :   TypeSpecifier identifierList
     ;
 
 identifierList
@@ -81,7 +82,6 @@ identifierList
 statement
     :   assignmentExpression ';'
     |   parallelBlock ';'
-    |   ioOperation ';'
     ;
 
 assignmentExpression
@@ -117,16 +117,20 @@ atomicExpression
     ;
 
 parallelBlock
-    :   StartParallel parallelItemList EndParallel
+    :   startParallel parallelItemList endParallel
+    ;
+
+startParallel
+    : 'cobegin'
+    ;
+
+endParallel
+    : 'coend'
     ;
 
 parallelItemList
-    :   parallelItem
-    |   parallelItemList parallelItem
-    ;
-
-parallelItem
     :   statement
+    |   parallelItemList statement
     ;
 
 ioOperation
@@ -145,14 +149,6 @@ writeFunction
 TypeSpecifier
     :   ('input_var'
     | 'internal_var')
-    ;
-
-StartParallel
-    : 'cobegin'
-    ;
-
-EndParallel
-    : 'coend'
     ;
 
 Identifier
