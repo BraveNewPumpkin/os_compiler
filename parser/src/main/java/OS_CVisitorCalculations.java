@@ -6,6 +6,7 @@ import edu.uh.cs.os_c.OS_CBaseVisitor;
 import edu.uh.cs.os_c.OS_CParser;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -20,6 +21,7 @@ public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, I
     public OS_CVisitorCalculations(Map<String, Integer> variables){
         parallelCount = 0;
         this.variables = variables;
+        stack = new ArrayList<>();
     }
 
     public boolean isParallel(){
@@ -41,7 +43,7 @@ public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, I
         }
         parallelCount--;
         if(!isParallel()){
-           stack.parallelStream().
+           stack.parallelStream().forEach(frame -> frame.apply(0));
         }
         //dummy return
         return i -> 0;

@@ -2,12 +2,12 @@ main()
 {
 	input_var a,b,c,d;
 	internal_var p0,p1,p2,p3,p4,p5;
-	read(a,b,c,d);
+	read(a,b,c,d,e);
 	cobegin
 		p0 = a - b;
-		p1 = c + d;
-		p2 = a - d;
-		p3 = b * c;
+		p1 = p0 + d;
+		p2 = c - d;
+		p3 = p1 * p2;
 	coend;
 	p4 = (p0 + p1) * p2;
 	p5 = (p3 - p4) / p2;
