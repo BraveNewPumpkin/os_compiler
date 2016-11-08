@@ -89,31 +89,30 @@ assignmentExpression
     ;
 
 rExpression
-    :   rValue
+    :   atomicExpression
+    |   additiveExpression
     |   multiplicativeExpression
+    ;
+
+atomicExpression
+    :   '(' rExpression ')'
+    |   rValue
+    ;
+
+additiveExpression
+    :   atomicExpression '+' rExpression
+    |   atomicExpression '-' rExpression
+    ;
+
+multiplicativeExpression
+    :   atomicExpression '*' rExpression
+    |   atomicExpression '/' rExpression
+    |   atomicExpression '%' rExpression
     ;
 
 rValue
     :   Identifier
     |   Constant
-    ;
-
-multiplicativeExpression
-    :   additiveExpression
-    |   multiplicativeExpression '*' atomicExpression
-    |   multiplicativeExpression '/' atomicExpression
-    |   multiplicativeExpression '%' atomicExpression
-    ;
-
-additiveExpression
-    :   atomicExpression
-    |   additiveExpression '+' multiplicativeExpression
-    |   additiveExpression '-' multiplicativeExpression
-    ;
-
-atomicExpression
-    :   rValue
-    |   '(' rExpression ')'
     ;
 
 parallelBlock
