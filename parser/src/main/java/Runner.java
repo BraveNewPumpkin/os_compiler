@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 public class Runner {
     public static void main(String args[]) {
@@ -23,9 +24,9 @@ public class Runner {
             if(verbose){
                 System.out.println(string_tree);
             }
-            Map<String, Integer> variables = os_c_runner.getInputVariables(data_input);
+            ConcurrentMap<String, Integer> variables = os_c_runner.getInputVariables(data_input);
             os_c_runner.runCalculations(variables);
-//            os_c_runner.write(variables, System.out);
+            os_c_runner.write(variables, System.out);
 
         } catch (IOException e) {
             System.err.printf("failed to load config file: %s\n", code_filepath);

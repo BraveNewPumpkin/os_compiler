@@ -12,6 +12,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 //import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
@@ -28,15 +30,16 @@ public class OS_CRunner {
         return tree.toStringTree(parser);
     }
 
-    public Map<String, Integer> getInputVariables(BufferedReader data_input) throws IOException, InvalidDataException {
-        Map<String, Integer> variables = new HashMap<>();
+    public ConcurrentMap<String, Integer>
+    getInputVariables(BufferedReader data_input) throws IOException, InvalidDataException {
+        ConcurrentMap<String, Integer> variables = new ConcurrentHashMap<>();
         return getInputVariables(data_input, variables);
     }
 
-    public Map<String, Integer>
+    public ConcurrentMap<String, Integer>
     getInputVariables(
             BufferedReader data_input,
-            Map<String, Integer> variables
+            ConcurrentMap<String, Integer> variables
     ) throws IOException, InvalidDataException {
         List<String> input_variables = new ArrayList<String>();
         OS_CVisitor visitor = new OS_CVisitorDeclarations(input_variables);
@@ -70,13 +73,19 @@ public class OS_CRunner {
         return variables;
     }
 
-    public void runCalculations(Map<String, Integer> variables) {
+    public void runCalculations(ConcurrentMap<String, Integer> variables) {
         OS_CVisitor visitor = new OS_CVisitorCalculations(variables);
         //visit and perform all calculations
         visitor.visit(tree);
     }
     public void write(Map<String, Integer> variables, PrintStream out){
-        //TODO implement OS_CVisitorWrite
-        //TODO write all specified variables to out
+        List<String> variable_names = new ArrayList<String>();
+        List<String> variable_values = new ArrayList<String>();
+        OS_CVisitor visitor = new OS_CVisitorWrite(variable_names);
+        visitor.visit(tree);
+        variable_names.forEach(variable_name -> {
+            variable_values.add(String.valueOf(variables.get(variable_name)));
+        });
+        out.println(String.join(",", variable_values));
     }
 }

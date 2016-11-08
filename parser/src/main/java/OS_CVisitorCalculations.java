@@ -6,6 +6,7 @@ import edu.uh.cs.os_c.OS_CBaseVisitor;
 import edu.uh.cs.os_c.OS_CParser;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 import java.util.function.Function;
@@ -13,6 +14,7 @@ import java.util.function.Function;
 public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, Integer>> {
     private Map<String, Integer> variables;
     private Map<String, Semaphore> locks;
+    private List<Function<Integer, Integer>> stack;
     private int parallelCount;
 
     public OS_CVisitorCalculations(Map<String, Integer> variables){
@@ -33,8 +35,14 @@ public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, I
 
     @Override
     public Function<Integer, Integer> visitEndParallel(OS_CParser.EndParallelContext ctx) {
+        if(!isParallel()){
+            //would be a checked exception except that we can't change the interface as it's dynamically generated
+            throw new ParseCancellationException("mismatched end of parallel block");
+        }
         parallelCount--;
-        //TODO runParallel()
+        if(!isParallel()){
+           stack.parallelStream().
+        }
         //dummy return
         return i -> 0;
     }
@@ -52,22 +60,47 @@ public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, I
         Function<Integer, Integer> assignment = value -> {
             return variables.replace(variable_name, right_expression.apply(0));
         };
-        assignment.apply(0);
+        if(isParallel()){
+            stack.add(assignment);
+        }else {
+            assignment.apply(0);
+        }
 
         //dummy return
         return i -> 0;
     }
 
     @Override
+    public Function<Integer, Integer> visitSubtractiveExpression(OS_CParser.SubtractiveExpressionContext ctx) {
+        Function<Integer, Integer> left_expression = visit(ctx.rExpression(0));
+        Function<Integer, Integer> right_expression = visit(ctx.rExpression(1));
+        return i -> left_expression.apply(0) - right_expression.apply(0);
+    }
+
+    @Override
     public Function<Integer, Integer> visitAdditiveExpression(OS_CParser.AdditiveExpressionContext ctx) {
-       //TODO implement additive
-        return visitChildren(ctx);
+        Function<Integer, Integer> left_expression = visit(ctx.rExpression(0));
+        Function<Integer, Integer> right_expression = visit(ctx.rExpression(1));
+        return i -> left_expression.apply(0) + right_expression.apply(0);
+    }
+
+    @Override
+    public Function<Integer, Integer> visitDivisiveExpression(OS_CParser.DivisiveExpressionContext ctx) {
+        Function<Integer, Integer> left_expression = visit(ctx.rExpression(0));
+        Function<Integer, Integer> right_expression = visit(ctx.rExpression(1));
+        return i -> left_expression.apply(0) / right_expression.apply(0);
     }
 
     @Override
     public Function<Integer, Integer> visitMultiplicativeExpression(OS_CParser.MultiplicativeExpressionContext ctx) {
-        //TODO implement multiplicative
-        return visitChildren(ctx);
+        Function<Integer, Integer> left_expression = visit(ctx.rExpression(0));
+        Function<Integer, Integer> right_expression = visit(ctx.rExpression(1));
+        return i -> left_expression.apply(0) * right_expression.apply(0);
+    }
+
+    public Function<Integer, Integer> visitParentheticalExpression(OS_CParser.ParentheticalExpressionContext ctx) {
+        Function<Integer, Integer> expression = visit(ctx.rExpression());
+        return i -> expression.apply(0);
     }
 
     @Override
@@ -77,8 +110,4 @@ public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, I
             return variables.get(r_value_name);
         };
     }
-
-
-
-
 }
