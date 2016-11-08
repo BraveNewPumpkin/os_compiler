@@ -105,8 +105,12 @@ public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, I
     @Override
     public Function<Integer, Integer> visitRValue(OS_CParser.RValueContext ctx) {
         final String r_value_name = ctx.Identifier().getText();
-        return value -> {
-            return variables.get(r_value_name);
+        return i -> {
+            Integer value = variables.get(r_value_name);
+            if(value == null){
+                throw new UndefinedVariableException("undefined variable \"" + r_value_name + "\"");
+            }
+            return value;
         };
     }
 }

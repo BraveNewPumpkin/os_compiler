@@ -81,7 +81,7 @@ identifierList
 
 statement
     :   assignmentExpression ';'
-    |   parallelBlock ';'
+    |   parallelBlock ';'?
     ;
 
 assignmentExpression
