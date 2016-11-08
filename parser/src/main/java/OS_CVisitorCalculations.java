@@ -8,17 +8,15 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.ConcurrentMap;
 import java.util.function.Function;
 
 public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, Integer>> {
-    private Map<String, Integer> variables;
-    private Map<String, Semaphore> locks;
+    private ConcurrentMap<String, Integer> variables;
     private List<Function<Integer, Integer>> stack;
     private int parallelCount;
 
-    public OS_CVisitorCalculations(Map<String, Integer> variables){
+    public OS_CVisitorCalculations(ConcurrentMap<String, Integer> variables){
         parallelCount = 0;
         this.variables = variables;
         stack = new ArrayList<>();
@@ -56,7 +54,6 @@ public class OS_CVisitorCalculations extends OS_CBaseVisitor<Function<Integer, I
             //would be a checked exception except that we can't change the interface as it's dynamically generated
             throw new ParseCancellationException("undefined variable in assignment: \"" + variable_name + "\"");
         }
-        //TODO figure out how to call visitRExpression() and use lambda in lambda
         Function<Integer, Integer> right_expression = visit(ctx.rExpression());
         //create lambdas
         Function<Integer, Integer> assignment = value -> {
